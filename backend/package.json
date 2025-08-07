@@ -1,0 +1,34 @@
+{
+  "name": "auto-blogger-backend",
+  "version": "1.0.0",
+  "description": "Automated blog generation system backend",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "manual": "node runManual.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.2.1",
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "moment": "^2.29.4",
+    "mongodb": "^6.18.0",
+    "mongoose": "^7.8.7",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^7.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "blog",
+    "automation",
+    "ai",
+    "news"
+  ],
+  "author": "Auto Blogger",
+  "license": "MIT"
+}
