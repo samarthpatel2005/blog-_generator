@@ -202,10 +202,13 @@ async function startServer() {
   try {
     await connectToDatabase();
     
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-      console.log(`📊 Health check: http://localhost:${PORT}/health`);
-      console.log(`📝 API endpoint: http://localhost:${PORT}/api/blogs`);
+    const HOST = '0.0.0.0'; // Bind to all interfaces for external access
+    
+    app.listen(PORT, HOST, () => {
+      console.log(`🚀 Server running on http://${HOST}:${PORT}`);
+      console.log(`📊 Health check: http://43.204.228.115:${PORT}/health`);
+      console.log(`📝 API endpoint: http://43.204.228.115:${PORT}/api/blogs`);
+      console.log(`📧 Subscription: http://43.204.228.115:${PORT}/api/subscription`);
       console.log(`🔄 Environment: ${process.env.NODE_ENV || 'development'}`);
     });
   } catch (error) {

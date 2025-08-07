@@ -1,5 +1,5 @@
 const express = require('express');
-const BlogCleanupManager = require('../BlogCleanupManager');
+const BlogCleanupManager = require('../BlogCleanupManager.js'); // Adjust the path as necessary
 
 const router = express.Router();
 
