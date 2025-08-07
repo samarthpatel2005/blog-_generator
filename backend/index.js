@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 
 // Connect to MongoDB
 mongoose
-  .connect("mongodb+srv://samarthpatel2706:Samarth2706@cluster0.koolxfk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+  .connect("mongodb+srv://samarthpatel2706:Samarth2706@cluster0.koolxfk.mongodb.net/blogs?retryWrites=true&w=majority&appName=Cluster0", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -29,6 +29,7 @@ mongoose
     console.error('❌ MongoDB connection error:', err);
     process.exit(1);
   });
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;
