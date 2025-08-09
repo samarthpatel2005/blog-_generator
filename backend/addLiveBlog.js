@@ -4,7 +4,7 @@ const BlogGenerator = require('./blogGenerator/generateBlog');
 const Blog = require('./models/Blog');
 require('dotenv').config();
 
-async function generateAndAddBlog(category = 'science') {
+async function generateAndAddBlog(category = 'business') {
   const categories = {
     technology: 'Latest Technology Trends',
     business: 'Business and Market Analysis', 

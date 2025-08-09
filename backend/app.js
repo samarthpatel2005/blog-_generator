@@ -16,9 +16,7 @@ const scheduler = new BlogScheduler();
 
 // Middleware
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.CORS_ORIGINS?.split(',') || process.env.FRONTEND_URL
-    : process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: true, // Temporarily allow all origins for testing
   credentials: true
 }));
 
