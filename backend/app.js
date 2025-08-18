@@ -93,6 +93,37 @@ app.post('/api/scheduler/run-cleanup', async (req, res) => {
   }
 });
 
+// External cron trigger endpoints (for external services like cron-job.org)
+app.get('/api/cron/weekly', async (req, res) => {
+  try {
+    console.log('🕐 External weekly cron trigger received');
+    scheduler.runWeeklyGeneration().catch(console.error);
+    res.json({ success: true, message: 'Weekly blog generation triggered' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to trigger weekly generation' });
+  }
+});
+
+app.get('/api/cron/daily', async (req, res) => {
+  try {
+    console.log('🕐 External daily cron trigger received');
+    scheduler.runTrendingGeneration().catch(console.error);
+    res.json({ success: true, message: 'Daily blog generation triggered' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to trigger daily generation' });
+  }
+});
+
+app.get('/api/cron/cleanup', async (req, res) => {
+  try {
+    console.log('🕐 External cleanup cron trigger received');
+    scheduler.runManualCleanup().catch(console.error);
+    res.json({ success: true, message: 'Cleanup triggered' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to trigger cleanup' });
+  }
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Error:', err);
@@ -150,6 +181,21 @@ async function connectToDatabase() {
     scheduler.startCleanupSchedule();
     console.log('✅ Blog schedulers started');
     console.log('🧹 Cleanup schedule started');
+    
+    // Keep-alive mechanism for Render (prevents sleeping)
+    if (process.env.NODE_ENV === 'production') {
+      setInterval(async () => {
+        try {
+          // Self-ping to keep the service alive
+          const response = await fetch(`${process.env.RENDER_EXTERNAL_URL || 'https://blog-generator-i0l0.onrender.com'}/health`);
+          console.log(`🔄 Keep-alive ping: ${response.status}`);
+        } catch (error) {
+          console.log('⚠️ Keep-alive ping failed:', error.message);
+        }
+      }, 14 * 60 * 1000); // Ping every 14 minutes
+      
+      console.log('✅ Keep-alive mechanism started');
+    }
     
   } catch (error) {
     console.error('❌ MongoDB connection error:', error);
